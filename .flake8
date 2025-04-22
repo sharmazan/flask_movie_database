@@ -1,0 +1,110 @@
+[flake8]
+max-line-length = 100
+
+inline-quotes = double
+multiline-quotes = double
+docstring-quotes = double
+classmethod-decorators =
+    classmethod
+    cls_validator
+    cls_declared_attr
+
+
+ignore =
+    # C408: Unnecessary (dict/list/tuple) call - rewrite as a literal
+    #
+    # Calling directly dict/list/tuple is more obvious & explicit, making it
+    # easier to read.
+    C408,
+
+    # C812 missing trailing comma
+    # C813 missing trailing comma in Python 3
+    # C815 missing trailing comma in Python 3.5+
+    #
+    # Conflicts with Black.
+    C812,
+    C813,
+    C815,
+
+    # D202: No blank lines allowed after function docstring
+    # https://github.com/psf/black/issues/709
+    D202,
+
+    # E203: whitespace before ':'
+    #
+    # Black wants below in case of complex indexing (2+ variables in
+    # start/stop/step section):
+    # range(100)[start : stop : step * some_modifier]
+    #
+    # While Flake8 wants below:
+    # range(100)[start:stop:step * some_modifier]
+    E203,
+
+    # E501: line too long
+    #
+    # In Black strings can exceed max-line-length. For example, Black will not
+    # format a very long URL, where Flake8 will raise E501 violation.
+    E501,
+
+    # D10X: missing docstring in public methods
+    #
+    # More often than not docstrings are unnecessary, especially with
+    # descriptive name followed by self-documenting signature embellished with
+    # type hints.
+    D100, D101, D102, D103, D104, D105, D106, D107,
+
+    # W503: line break before binary operator
+    #
+    # Arbitrary preference to break before the operator, as it makes easy to
+    # match operators with operands.
+    # See: https://github.com/PyCQA/pycodestyle/issues/197#issuecomment-219742628
+    W503
+
+    # FastAPI Depends
+    B008
+
+    # [flake8] {
+    # line break after binary operator
+    W504,
+
+    # }
+
+    # [flake8-bandit] {
+    # Use of assert detected
+    S101,
+    # }
+
+
+exclude =
+    .git,
+    .venv,
+    __pycache__,
+    old,
+    build,
+    dist,
+    venv*,
+    */conftest.py,
+    *--demo*,
+    */migrations/versions/*,
+    */alembic/versions/*,
+    docs/,
+    .env,
+    env,
+    .history,
+    migrations,
+    .gitlab,
+    tests/test_migrations.py
+    dev/locust/locustfile.py
+
+per-file-ignores =
+    */__init__.py:E402, F401
+    routing.py: C901
+    # ignores single qoutes in snapshots
+    snap_test_*: Q000
+
+# McCabe Cyclomatic Complexity
+max-complexity = 7
+
+# [flake8-annotations-complexity] rules {
+max-annotations-complexity=6
+# }
