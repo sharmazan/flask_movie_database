@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, g, redirect, render_template, request, url_for
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 from werkzeug.exceptions import abort
 
 from flaskr.auth import login_required
@@ -32,22 +32,17 @@ def create():
         else:
             db = get_db()
             db.execute(
-                "INSERT INTO movies (title, year, rating, url)"
-                " VALUES (?, ?, ?, ?)",
-                (title, year, rating, url)
+                "INSERT INTO movies (title, year, rating, url) VALUES (?, ?, ?, ?)",
+                (title, year, rating, url),
             )
             db.commit()
             return redirect(url_for("catalog.index"))
-        
+
     return render_template("catalog/create.html")
-        
+
 
 def get_movie(id):
-    movie = get_db().execute(
-        "SELECT * FROM movies"
-        " WHERE id = ?",
-        (id,)
-    ).fetchone()
+    movie = get_db().execute("SELECT * FROM movies WHERE id = ?", (id,)).fetchone()
 
     if movie is None:
         abort(404, f"Movie id {id} doesn't exist.")
@@ -80,11 +75,11 @@ def update(id):
                 " rating = ?, "
                 " url = ? "
                 " WHERE id = ?",
-                (title, year, rating, url, id)
+                (title, year, rating, url, id),
             )
             db.commit()
             return redirect(url_for("catalog.index"))
-    
+
     return render_template("catalog/update.html", movie=movie)
 
 

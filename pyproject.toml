@@ -5,11 +5,7 @@ description = "Flask-based movie catalog"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "flake8>=7.2.0",
     "flask>=3.1.0",
-    "isort>=6.0.1",
-    "mypy>=1.15.0",
-    "ruff>=0.11.6",
 ]
 
 [tool.mypy]
@@ -25,10 +21,6 @@ check_untyped_defs = true
 warn_redundant_casts = true
 warn_return_any = true
 warn_unused_ignores = true
-plugins = [
-    "sqlalchemy.ext.mypy.plugin",
-    "pydantic.mypy"
-]
 
 [tool.pydantic-mypy]
 init_forbid_extra = true
@@ -51,32 +43,8 @@ exclude = '''
 )
 '''
 
-[tool.isort]
-    # https://github.com/timothycrosley/isort/wiki/isort-Settings
-    profile = "black"
-    multi_line_output=3
-
-    indent='    '
-    line_length=100
-    lines_after_imports=2
-
-    sections=["FUTURE", "STDLIB","THIRDPARTY","COMPANY","FIRSTPARTY","LOCALFOLDER"]
-    default_section="THIRDPARTY"
-    no_lines_before=["LOCALFOLDER"]
-    extra_standard_library=["typing_extensions"]
-    known_third_party=["fastapi", "pydantic", "sqlalchemy"]
-    known_company=[]
-    known_first_party=["app", "tests"]
-
-    use_parentheses=true
-    include_trailing_comma=true
-
-    order_by_type=false
-    combine_star=true
-    combine_as_imports=true
-
-    skip=["tests/conftest.py", ]
-    skip_glob=[
-        "migrations/versions/*.py",
-        "migrations/*.py",
-    ]
+[dependency-groups]
+dev = [
+    "mypy>=1.15.0",
+    "ruff>=0.11.6",
+]
