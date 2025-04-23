@@ -16,6 +16,7 @@ def index():
 
 
 @bp.route("/create", methods=("GET", "POST"))
+@login_required
 def create():
     if request.method == "POST":
         title = request.form["title"]
@@ -25,7 +26,7 @@ def create():
         error = None
 
         if not title:
-            error = "Title is required"
+            error = "Title is required."
 
         if error is not None:
             flash(error)
@@ -51,6 +52,7 @@ def get_movie(id):
 
 
 @bp.route("/<int:id>/update", methods=("GET", "POST"))
+@login_required
 def update(id):
     movie = get_movie(id)
 

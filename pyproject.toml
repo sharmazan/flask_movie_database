@@ -8,6 +8,21 @@ dependencies = [
     "flask>=3.1.0",
 ]
 
+[dependency-groups]
+dev = [
+    "coverage>=7.8.0",
+    "mypy>=1.15.0",
+    "pytest>=8.3.5",
+    "ruff>=0.11.6",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["flaskr"]
+
 [tool.mypy]
 python_version = "3.11"
 ignore_missing_imports = true
@@ -42,9 +57,3 @@ exclude = '''
   | snap_test_*
 )
 '''
-
-[dependency-groups]
-dev = [
-    "mypy>=1.15.0",
-    "ruff>=0.11.6",
-]

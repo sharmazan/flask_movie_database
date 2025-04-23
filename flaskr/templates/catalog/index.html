@@ -15,7 +15,9 @@
           <h1>{{ movie['title'] }}</h1>
           <div class="about">Year: {{ movie['year'] }}, Rating: {{ movie['rating'] }}</div>
         </div>
-        <a class="action" href="{{ url_for('catalog.update', id=movie['id']) }}">Edit</a>
+        {% if g.user %}
+          <a class="action" href="{{ url_for('catalog.update', id=movie['id']) }}">Edit</a>
+        {% endif %}
       </header>
       <p class="body"><a href="{{ movie['url'] }}">{{ movie['url'] }}</a></p>
     </article>
